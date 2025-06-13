@@ -30,6 +30,8 @@ fun main() {
             println("X wins")
         } else if (vinnerPosisjonerString == "OOO"){
             println("O wins")
+        } else {
+            println("Game not finished")
         }
     }
 
