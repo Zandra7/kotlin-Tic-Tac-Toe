@@ -4,6 +4,19 @@ import kotlin.math.abs
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+const val EMPTY_SPACE = '_'
+const val X = 'X'
+const val O = 'O'
+const val THREE_X = "XXX"
+const val THREE_O = "OOO"
+
+const val IMPOSSIBLE = "Impossible"
+const val GAME_NOT_FINISHED = "Game not finished"
+const val DRAW = "Draw"
+const val X_WINS = "X wins"
+const val O_WINS = "O wins"
+const val ERROR_STATE = "Error"
+
 fun main() {
     val trekk = readln()
     println("""
@@ -28,42 +41,29 @@ fun main() {
 
     var hasXThreeInARow = false
     var hasOThreeInARow = false
-    val isEmptySpaces = trekk.contains("_")
 
-    val countX = trekk.count{it == 'X'}
-    val countO = trekk.count{it == 'O'}
+    val isEmptySpaces = trekk.contains(EMPTY_SPACE)
+    val countX = trekk.count{it == X}
+    val countO = trekk.count{it == O}
     val hasTooManyOfSymbol = abs(countX - countO) >= 2
 
     for (verdierIVinnerposisjoner in verdierIVinnerposisjonerListe) {
         val vinnerPosisjonerString = verdierIVinnerposisjoner.joinToString("")
-        if (vinnerPosisjonerString == "XXX"){
+        if (vinnerPosisjonerString == THREE_X){
             hasXThreeInARow = true
-        } else if (vinnerPosisjonerString == "OOO") {
+        } else if (vinnerPosisjonerString == THREE_O) {
             hasOThreeInARow = true
         }
     }
 
-    if (hasTooManyOfSymbol) {
-        println("Impossible")
-    } else if (!hasXThreeInARow && !hasOThreeInARow) {
-        if (isEmptySpaces) {
-            println("Game not finished")
-        } else {
-            println("Draw")
-        }
-    } else {
-        if (hasXThreeInARow && hasOThreeInARow) {
-            println("Impossible")
-        } else if (hasXThreeInARow) {
-            println("X wins")
-        } else {
-            println("O wins")
-        }
+    val result = when {
+        hasTooManyOfSymbol || (hasXThreeInARow && hasOThreeInARow) -> IMPOSSIBLE
+        !hasXThreeInARow && !hasOThreeInARow && isEmptySpaces -> GAME_NOT_FINISHED
+        !hasXThreeInARow && !hasOThreeInARow -> DRAW
+        hasXThreeInARow -> X_WINS
+        hasOThreeInARow -> O_WINS
+        else -> ERROR_STATE
     }
-
-    // vinnerindex: 0 1 2, 3 4 5, 6 7 8, 0 3 6, 1 4 7, 2 5 8, 0 4 8, 2 4 6
-    // lagre vinnerindex i multidimensjonell liste
-    // loope igjennom hver liste i lista
-    // sjekke at input i disse indexene er kun X/O
+    println(result)
 
 }
