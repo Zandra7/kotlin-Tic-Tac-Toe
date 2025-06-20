@@ -1,5 +1,7 @@
 package org.example
 
+import kotlin.math.abs
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
@@ -24,14 +26,38 @@ fun main() {
         listOf(trekk[2], trekk[4], trekk[6]),
     )
 
+    var hasXThreeInARow = false
+    var hasOThreeInARow = false
+    val isEmptySpaces = trekk.contains("_")
+
+    val countX = trekk.count{it == 'X'}
+    val countO = trekk.count{it == 'O'}
+    val hasTooManyOfSymbol = abs(countX - countO) >= 2
+
     for (verdierIVinnerposisjoner in verdierIVinnerposisjonerListe) {
         val vinnerPosisjonerString = verdierIVinnerposisjoner.joinToString("")
         if (vinnerPosisjonerString == "XXX"){
-            println("X wins")
-        } else if (vinnerPosisjonerString == "OOO"){
-            println("O wins")
-        } else {
+            hasXThreeInARow = true
+        } else if (vinnerPosisjonerString == "OOO") {
+            hasOThreeInARow = true
+        }
+    }
+
+    if (hasTooManyOfSymbol) {
+        println("Impossible")
+    } else if (!hasXThreeInARow && !hasOThreeInARow) {
+        if (isEmptySpaces) {
             println("Game not finished")
+        } else {
+            println("Draw")
+        }
+    } else {
+        if (hasXThreeInARow && hasOThreeInARow) {
+            println("Impossible")
+        } else if (hasXThreeInARow) {
+            println("X wins")
+        } else {
+            println("O wins")
         }
     }
 
