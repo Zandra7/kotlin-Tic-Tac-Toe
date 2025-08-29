@@ -42,4 +42,33 @@ class Spill {
         }
         return result
     }
+
+    fun printGrid(trekk: String) {
+        println(
+            """
+        ---------
+        | ${trekk[0]} ${trekk[1]} ${trekk[2]} |
+        | ${trekk[3]} ${trekk[4]} ${trekk[5]} |
+        | ${trekk[6]} ${trekk[7]} ${trekk[8]} |
+        ---------
+    """.trimIndent()
+        )
+    }
+
+    fun isValidInput(move: String): ValidationResult {
+        val moveArray = move.split(" ")
+        val yKordinat = moveArray[0].toIntOrNull()
+        val xKordinat = moveArray[1].toIntOrNull()
+        if (yKordinat == null || xKordinat == null) {
+            return ValidationResult(false, yKordinat, xKordinat,"You should enter numbers!")
+        }
+        return ValidationResult(true, yKordinat, xKordinat)
+    }
 }
+
+data class ValidationResult(
+    val isValid: Boolean,
+    val yKordinat: Int? = null,
+    val xKordinat: Int? = null,
+    val message: String? = null
+)

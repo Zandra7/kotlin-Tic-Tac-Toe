@@ -1,5 +1,6 @@
-import org.example.Spill
-import org.junit.jupiter.api.Assertions.assertEquals
+package org.example
+
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class SpillTest {
@@ -9,7 +10,7 @@ class SpillTest {
         val trekk = "XXXOO__O_"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("X wins", actualResult)
+        Assertions.assertEquals("X wins", actualResult)
     }
 
     @Test
@@ -17,7 +18,7 @@ class SpillTest {
         val trekk = "XOXOXOXXO"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("X wins", actualResult)
+        Assertions.assertEquals("X wins", actualResult)
     }
 
     @Test
@@ -25,7 +26,7 @@ class SpillTest {
         val trekk = "XOOOXOXXO"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("O wins", actualResult)
+        Assertions.assertEquals("O wins", actualResult)
     }
 
     @Test
@@ -33,7 +34,7 @@ class SpillTest {
         val trekk = "XOXOOXXXO"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("Draw", actualResult)
+        Assertions.assertEquals("Draw", actualResult)
     }
 
     @Test
@@ -41,7 +42,7 @@ class SpillTest {
         val trekk = "XO_OOX_X_"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("Game not finished", actualResult)
+        Assertions.assertEquals("Game not finished", actualResult)
     }
 
     @Test
@@ -49,7 +50,7 @@ class SpillTest {
         val trekk = "XO_XO_XOX"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("Impossible", actualResult)
+        Assertions.assertEquals("Impossible", actualResult)
     }
 
     @Test
@@ -57,7 +58,7 @@ class SpillTest {
         val trekk = "_O_X__X_X"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("Impossible", actualResult)
+        Assertions.assertEquals("Impossible", actualResult)
     }
 
     @Test
@@ -65,6 +66,13 @@ class SpillTest {
         val trekk = "_OOOO_X_X"
         val spill = Spill()
         val actualResult = spill.spillLogikk(trekk)
-        assertEquals("Impossible", actualResult)
+        Assertions.assertEquals("Impossible", actualResult)
+    }
+
+    @Test
+    fun `when move a b expect You should enter numbers!`() {
+        val spill = Spill()
+        val validationResult = spill.isValidInput("a b")
+        Assertions.assertEquals("You should enter numbers!", validationResult.message)
     }
 }

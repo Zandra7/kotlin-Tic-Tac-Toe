@@ -1,0 +1,43 @@
+package org.example
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+const val EMPTY_SPACE = '_'
+const val X = 'X'
+const val O = 'O'
+const val THREE_X = "XXX"
+const val THREE_O = "OOO"
+
+const val IMPOSSIBLE = "Impossible"
+const val GAME_NOT_FINISHED = "Game not finished"
+const val DRAW = "Draw"
+const val X_WINS = "X wins"
+const val O_WINS = "O wins"
+const val ERROR_STATE = "Error"
+
+fun main() {
+    val spill = Spill()
+    val trekk = readln() // _XXOO_OX_
+    spill.printGrid(trekk)
+
+    val result = spill.spillLogikk(trekk)
+
+// --- loop
+// Ta inn kordinater fra bruker
+
+// Sjekke om det er 2 tall
+    // Hvis ikke - print feilmelding og send tilbake til start av loop "You should enter numbers!"
+// Sjekke om tallene er fra 1 - 3
+    // Hvis ikke - print feilmelding og send tilbake til start av loop "Coordinates should be from 1 to 3!"
+// Sjekke om cellen er tatt
+// Hvis ikke - print feilmelding og send tilbake til start av loop "This cell is occupied! Choose another one!"
+// ---
+
+// Oppdater grid med nytt trekk
+// Print den oppdaterte griden
+
+    if (result == GAME_NOT_FINISHED) {
+        val move = readln()
+        spill.isValidInput(move)
+    }
+}
