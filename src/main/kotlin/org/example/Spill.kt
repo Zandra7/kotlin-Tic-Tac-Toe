@@ -58,35 +58,34 @@ class Spill {
     // TODO: mye bedre løsning enn hvordan vi tar inn board state
     fun isValidInput(move: String, boardState: String = ""): ValidationResult {
         val moveArray = move.split(" ")
-        val yKordinat = moveArray[0].toIntOrNull()
-        val xKordinat = moveArray[1].toIntOrNull()
-        if (yKordinat == null || xKordinat == null) {
-            return ValidationResult(false, yKordinat, xKordinat,"You should enter numbers!")
+        val yKoordinat = moveArray[0].toIntOrNull()
+        val xKoordinat = moveArray[1].toIntOrNull()
+        if (yKoordinat == null || xKoordinat == null) {
+            return ValidationResult(false, -1, -1,"You should enter numbers!")
         }
-        if (yKordinat !in 1..3 || xKordinat !in 1..3) {
-            return ValidationResult(false, yKordinat, xKordinat, "Coordinates should be from 1 to 3!")
+        if (yKoordinat !in 1..3 || xKoordinat !in 1..3) {
+            return ValidationResult(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
         }
-        val isCellEmpty = isCellEmpty(yKordinat, xKordinat, boardState)
-        return ValidationResult(true, yKordinat, xKordinat)
+        val isCellEmpty = isCellEmpty(yKoordinat, xKoordinat, boardState)
+        return ValidationResult(true, yKoordinat, xKoordinat)
     }
 
-    fun isCellEmpty(yKordinat: Int, xKordinat: Int, boardState: String): ValidationResult {
+    fun isCellEmpty(yKoordinat: Int, xKoordinat: Int, boardState: String): ValidationResult {
         val boardState2dList = mutableListOf(
             mutableListOf<Char>(boardState[0], boardState[1], boardState[2]),   //[0]
             mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),    //[1]
             mutableListOf<Char>(boardState[6], boardState[7], boardState[8])    //[2]
         )
-        if (boardState2dList[xKordinat][yKordinat] != EMPTY_SPACE) {
-            return ValidationResult(false, yKordinat, xKordinat, "This cell is occupied! Choose another one!")
+        if (boardState2dList[xKoordinat][yKoordinat] != EMPTY_SPACE) {
+            return ValidationResult(false, yKoordinat, xKoordinat, "This cell is occupied! Choose another one!")
         }
-        return ValidationResult(true, yKordinat, xKordinat)
+        return ValidationResult(true, yKoordinat, xKoordinat)
     }
 }
 
-// TODO: vi trenger ikke optional på x og y koordinat når input er ugyldig
 data class ValidationResult(
     val isValid: Boolean,
-    val yKordinat: Int? = null,
-    val xKordinat: Int? = null,
+    val yKoordinat: Int, // -1 betyr ugyldig
+    val xKoordinat: Int, // -1 betyr ugyldig
     val message: String? = null
 )
