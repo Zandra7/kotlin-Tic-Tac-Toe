@@ -56,7 +56,7 @@ class Spill {
     }
 
     // TODO: mye bedre løsning enn hvordan vi tar inn board state
-    fun isValidInput(move: String, boardState: String = ""): ValidationResult {
+    fun isValidInput(move: String, boardState: String): ValidationResult {
         val moveArray = move.split(" ")
         val yKoordinat = moveArray[0].toIntOrNull()
         val xKoordinat = moveArray[1].toIntOrNull()
@@ -67,16 +67,17 @@ class Spill {
             return ValidationResult(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
         }
         val isCellEmpty = isCellEmpty(yKoordinat, xKoordinat, boardState)
-        return ValidationResult(true, yKoordinat, xKoordinat)
+
+        return isCellEmpty
     }
 
-    fun isCellEmpty(yKoordinat: Int, xKoordinat: Int, boardState: String): ValidationResult {
+    private fun isCellEmpty(yKoordinat: Int, xKoordinat: Int, boardState: String): ValidationResult {
         val boardState2dList = mutableListOf(
             mutableListOf<Char>(boardState[0], boardState[1], boardState[2]),   //[0]
             mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),    //[1]
             mutableListOf<Char>(boardState[6], boardState[7], boardState[8])    //[2]
         )
-        if (boardState2dList[xKoordinat][yKoordinat] != EMPTY_SPACE) {
+        if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != EMPTY_SPACE) {
             return ValidationResult(false, yKoordinat, xKoordinat, "This cell is occupied! Choose another one!")
         }
         return ValidationResult(true, yKoordinat, xKoordinat)
