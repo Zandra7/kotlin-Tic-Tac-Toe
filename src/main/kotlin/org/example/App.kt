@@ -18,9 +18,9 @@ const val ERROR_STATE = "Error"
 fun main() {
     val spill = Spill()
     val boardState = readln() // _XXOO_OX_
-    spill.printGrid(boardState)
-
-    val result = spill.spillLogikk(boardState)
+    val board = Board(boardState)
+    board.printBoard()
+    val spillTilstand = spill.hentSpillTilstand(boardState)
 
 // --- loop
 // Ta inn kordinater fra bruker
@@ -36,11 +36,14 @@ fun main() {
 // Oppdater grid med nytt trekk
 // Print den oppdaterte griden
 
-    if (result == GAME_NOT_FINISHED) {
-        val move = readln()
-        val result = spill.isValidInput(move, boardState)
+    if (spillTilstand == GAME_NOT_FINISHED) {
+        val trekk = readln()
+        val result = spill.validerTrekk(trekk, boardState)
         if (!result.isValid) {
             println(result.message)
+        } else {
+            // Oppdater spillboard med trekk på posisjonen bruker har valgt
+
         }
     }
 }

@@ -3,7 +3,7 @@ package org.example
 import kotlin.math.abs
 
 class Spill {
-    fun spillLogikk(boardState: String): String {
+    fun hentSpillTilstand(boardState: String): String {
         val vinnerKombinasjoner = listOf(
             listOf(boardState[0], boardState[1], boardState[2]),
             listOf(boardState[3], boardState[4], boardState[5]),
@@ -43,21 +43,9 @@ class Spill {
         return result
     }
 
-    fun printGrid(boardState: String) {
-        println(
-            """
-        ---------
-        | ${boardState[0]} ${boardState[1]} ${boardState[2]} |
-        | ${boardState[3]} ${boardState[4]} ${boardState[5]} |
-        | ${boardState[6]} ${boardState[7]} ${boardState[8]} |
-        ---------
-    """.trimIndent()
-        )
-    }
-
     // TODO: mye bedre løsning enn hvordan vi tar inn board state
-    fun isValidInput(move: String, boardState: String): ValidationResult {
-        val moveArray = move.split(" ")
+    fun validerTrekk(trekk: String, boardState: String?): ValidationResult {
+        val moveArray = trekk.split(" ")
         val yKoordinat = moveArray[0].toIntOrNull()
         val xKoordinat = moveArray[1].toIntOrNull()
         if (yKoordinat == null || xKoordinat == null) {
@@ -66,7 +54,7 @@ class Spill {
         if (yKoordinat !in 1..3 || xKoordinat !in 1..3) {
             return ValidationResult(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
         }
-        val isCellEmpty = isCellEmpty(yKoordinat, xKoordinat, boardState)
+        val isCellEmpty = isCellEmpty(yKoordinat, xKoordinat, boardState!!)
 
         return isCellEmpty
     }
