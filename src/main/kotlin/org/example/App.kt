@@ -37,12 +37,13 @@ fun main() {
 // Print den oppdaterte griden
 
     if (spillTilstand == GAME_NOT_FINISHED) {
-        val trekk = readln()
-        val result = spill.validerTrekk(trekk, boardState)
-        if (!result.isValid) {
-            println(result.message)
+        val trekk = readln() // 1 1
+        val validerTrekkResultat = spill.validerTrekk(trekk, boardState)
+        if (!validerTrekkResultat.isValid) {
+            println(validerTrekkResultat.message)
+            // TODO: Loop som ber bruker skrive koordinat på nytt til det blir 'isValid = true'
         } else {
-            // Oppdater spillboard med trekk på posisjonen bruker har valgt
+            // TODO: Oppdater grid med nytt trekk og print til konsoll
 
         }
     }

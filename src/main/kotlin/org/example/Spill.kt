@@ -43,7 +43,7 @@ class Spill {
         return result
     }
 
-    // TODO: mye bedre løsning enn hvordan vi tar inn board state
+    // TODO: Vi vil ikke sende inn boardState som string eller optional
     fun validerTrekk(trekk: String, boardState: String?): ValidationResult {
         val moveArray = trekk.split(" ")
         val yKoordinat = moveArray[0].toIntOrNull()
@@ -62,7 +62,7 @@ class Spill {
     private fun isCellEmpty(yKoordinat: Int, xKoordinat: Int, boardState: String): ValidationResult {
         val boardState2dList = mutableListOf(
             mutableListOf<Char>(boardState[0], boardState[1], boardState[2]),   //[0]
-            mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),    //[1]
+            mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),   //[1]
             mutableListOf<Char>(boardState[6], boardState[7], boardState[8])    //[2]
         )
         if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != EMPTY_SPACE) {
