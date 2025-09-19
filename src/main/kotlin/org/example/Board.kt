@@ -20,4 +20,11 @@ class Board(val boardState: String) {
     """.trimIndent()
         )
     }
+
+    fun isCellEmpty(yKoordinat: Int, xKoordinat: Int): ValidationResult {
+        if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != SpillSymboler.EMPTY_SPACE.symbol) {
+            return ValidationResult(false, yKoordinat, xKoordinat, "This cell is occupied! Choose another one!")
+        }
+        return ValidationResult(true, yKoordinat, xKoordinat)
+    }
 }

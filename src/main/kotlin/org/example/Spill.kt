@@ -22,7 +22,7 @@ enum class SpillResultat(val result: String) {
 
 }
 
-class Spill {
+class Spill(val board: Board) {
     fun beregnSpillResultat(boardState: String): SpillResultat {
         val vinnerKombinasjoner = listOf(
             listOf(boardState[0], boardState[1], boardState[2]),
@@ -75,21 +75,9 @@ class Spill {
         if (yKoordinat !in 1..3 || xKoordinat !in 1..3) {
             return ValidationResult(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
         }
-        val isCellEmpty = isCellEmpty(yKoordinat, xKoordinat, boardState!!)
+        val isCellEmpty = board.isCellEmpty(yKoordinat, xKoordinat)
 
         return isCellEmpty
-    }
-
-    private fun isCellEmpty(yKoordinat: Int, xKoordinat: Int, boardState: String): ValidationResult {
-        val boardState2dList = mutableListOf(
-            mutableListOf<Char>(boardState[0], boardState[1], boardState[2]),   //[0]
-            mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),   //[1]
-            mutableListOf<Char>(boardState[6], boardState[7], boardState[8])    //[2]
-        )
-        if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != SpillSymboler.EMPTY_SPACE.symbol) {
-            return ValidationResult(false, yKoordinat, xKoordinat, "This cell is occupied! Choose another one!")
-        }
-        return ValidationResult(true, yKoordinat, xKoordinat)
     }
 }
 

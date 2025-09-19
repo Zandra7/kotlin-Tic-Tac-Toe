@@ -6,9 +6,9 @@ package org.example
 
 
 fun main() {
-    val spill = Spill()
     val boardState = readln() // _XXOO_OX_
     val board = Board(boardState)
+    val spill = Spill(board)
     board.printBoard()
     val spillResultat = spill.beregnSpillResultat(boardState)
 
