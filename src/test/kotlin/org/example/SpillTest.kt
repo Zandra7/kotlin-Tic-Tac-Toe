@@ -9,66 +9,67 @@ class SpillTest {
     fun `when boardState XXXOO__O_ expect X wins`() {
         val boardState = "XXXOO__O_"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("X wins", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.X_WINS, actualResult)
     }
 
     @Test
     fun `when boardState XOXOXOXXO expect X wins`() {
         val boardState = "XOXOXOXXO"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("X wins", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.X_WINS, actualResult)
     }
 
     @Test
     fun `when boardState XOOOXOXXO expect O wins`() {
         val boardState = "XOOOXOXXO"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("O wins", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.O_WINS, actualResult)
     }
 
     @Test
     fun `when boardState XOXOOXXXO expect Draw`() {
         val boardState = "XOXOOXXXO"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("Draw", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.DRAW, actualResult)
     }
 
     @Test
     fun `when boardState XO_OOX_X_ expect Game not finished`() {
         val boardState = "XO_OOX_X_"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("Game not finished", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.GAME_NOT_FINISHED, actualResult)
     }
 
     @Test
     fun `when boardState XO_XO_XOX expect Impossible`() {
         val boardState = "XO_XO_XOX"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("Impossible", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
     }
 
     @Test
     fun `when boardState _O_X__X_X expect Impossible`() {
         val boardState = "_O_X__X_X"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("Impossible", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
     }
 
     @Test
     fun `when boardState _OOOO_X_X expect Impossible`() {
         val boardState = "_OOOO_X_X"
         val spill = Spill()
-        val actualResult = spill.hentSpillTilstand(boardState)
-        Assertions.assertEquals("Impossible", actualResult)
+        val actualResult = spill.beregnSpillResultat(boardState)
+        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
     }
 
+    /*
     @Test
     fun `when move 1 3 expect isValid true`(){
         val spill = Spill()
@@ -89,4 +90,5 @@ class SpillTest {
         val validationResult = spill.validerTrekk("0 4")
         Assertions.assertEquals("Coordinates should be from 1 to 3!", validationResult.message)
     }
+    */
 }

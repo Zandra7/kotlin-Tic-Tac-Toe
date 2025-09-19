@@ -2,8 +2,28 @@ package org.example
 
 import kotlin.math.abs
 
+enum class SpillSymboler(val symbol: Char) {
+    X('X'),
+    O('O'),
+    EMPTY_SPACE('_')
+}
+
+const val THREE_X = "XXX"
+const val THREE_O = "OOO"
+
+enum class SpillResultat(val result: String) {
+    IMPOSSIBLE("Impossible"),
+    GAME_NOT_FINISHED("Game not finished"),
+    DRAW("Draw"),
+    X_WINS("X wins"),
+    O_WINS("O wins"),
+    ERROR_STATE("Error")
+
+
+}
+
 class Spill {
-    fun hentSpillTilstand(boardState: String): String {
+    fun beregnSpillResultat(boardState: String): SpillResultat {
         val vinnerKombinasjoner = listOf(
             listOf(boardState[0], boardState[1], boardState[2]),
             listOf(boardState[3], boardState[4], boardState[5]),
@@ -18,9 +38,10 @@ class Spill {
         var hasXThreeInARow = false
         var hasOThreeInARow = false
 
-        val isEmptySpaces = boardState.contains(EMPTY_SPACE)
-        val countX = boardState.count { it == X }
-        val countO = boardState.count { it == O }
+        // TODO: Kanskje flytte til Board.kt
+        val hasEmptySpaces = boardState.contains(SpillSymboler.EMPTY_SPACE.symbol)
+        val countX = boardState.count { it == SpillSymboler.X.symbol }
+        val countO = boardState.count { it == SpillSymboler.O.symbol }
         val hasTooManyOfSymbol = abs(countX - countO) >= 2
 
         for (verdierIVinnerposisjoner in vinnerKombinasjoner) {
@@ -33,12 +54,12 @@ class Spill {
         }
 
         val result = when {
-            hasTooManyOfSymbol || (hasXThreeInARow && hasOThreeInARow) -> IMPOSSIBLE
-            !hasXThreeInARow && !hasOThreeInARow && isEmptySpaces -> GAME_NOT_FINISHED
-            !hasXThreeInARow && !hasOThreeInARow -> DRAW
-            hasXThreeInARow -> X_WINS
-            hasOThreeInARow -> O_WINS
-            else -> ERROR_STATE
+            hasTooManyOfSymbol || (hasXThreeInARow && hasOThreeInARow) -> SpillResultat.IMPOSSIBLE
+            !hasXThreeInARow && !hasOThreeInARow && hasEmptySpaces -> SpillResultat.GAME_NOT_FINISHED
+            !hasXThreeInARow && !hasOThreeInARow -> SpillResultat.DRAW
+            hasXThreeInARow -> SpillResultat.X_WINS
+            hasOThreeInARow -> SpillResultat.O_WINS
+            else -> SpillResultat.ERROR_STATE
         }
         return result
     }
@@ -65,7 +86,7 @@ class Spill {
             mutableListOf<Char>(boardState[3], boardState[4], boardState[5]),   //[1]
             mutableListOf<Char>(boardState[6], boardState[7], boardState[8])    //[2]
         )
-        if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != EMPTY_SPACE) {
+        if (boardState2dList[xKoordinat - 1][yKoordinat - 1] != SpillSymboler.EMPTY_SPACE.symbol) {
             return ValidationResult(false, yKoordinat, xKoordinat, "This cell is occupied! Choose another one!")
         }
         return ValidationResult(true, yKoordinat, xKoordinat)
