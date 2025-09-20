@@ -1,22 +1,21 @@
 package org.example
-// TODO: Gjør til Norsk
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 
 fun main() {
-    val boardState = readln() // _XXOO_OX_
-    val board = Board(boardState)
-    val spill = Spill(board)
-    board.printBoard()
-    val spillResultat = spill.beregnSpillResultat(boardState)
+    val brettTilstand = readln() // _XXOO_OX_
+    val brett = Brett(brettTilstand)
+    val spill = Spill(brett)
+    brett.printBrett()
+    val spillResultat = spill.beregnSpillResultat(brettTilstand)
 
-    if (spillResultat == SpillResultat.GAME_NOT_FINISHED) {
+    if (spillResultat == SpillResultat.SPILL_IKKE_FULLFØRT) {
         val trekk = readln() // 1 1
-        val validerTrekkResultat = spill.validerTrekk(trekk, boardState)
-        if (!validerTrekkResultat.isValid) {
-            println(validerTrekkResultat.message)
+        val validerTrekkResultat = spill.validerTrekk(trekk, brettTilstand)
+        if (!validerTrekkResultat.erGyldig) {
+            println(validerTrekkResultat.feilMelding)
             // TODO: Loop som ber bruker skrive koordinat på nytt til det blir 'isValid = true'
         } else {
             // TODO: Oppdater grid med nytt trekk og print til konsoll

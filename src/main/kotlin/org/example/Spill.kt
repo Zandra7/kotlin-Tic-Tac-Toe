@@ -2,88 +2,86 @@ package org.example
 
 import kotlin.math.abs
 
-enum class SpillSymboler(val symbol: Char) {
+enum class SpillSymboler(val tegn: Char) {
     X('X'),
     O('O'),
-    EMPTY_SPACE('_')
+    LEDIG_POSISJON('_')
 }
 
-const val THREE_X = "XXX"
-const val THREE_O = "OOO"
+const val TRE_X = "XXX"
+const val TRE_O = "OOO"
 
-enum class SpillResultat(val result: String) {
-    IMPOSSIBLE("Impossible"),
-    GAME_NOT_FINISHED("Game not finished"),
-    DRAW("Draw"),
-    X_WINS("X wins"),
-    O_WINS("O wins"),
-    ERROR_STATE("Error")
-
-
+enum class SpillResultat(val resultat: String) {
+    UMULIG("Impossible"),
+    SPILL_IKKE_FULLFØRT("Game not finished"),
+    UAVGJORT("Draw"),
+    X_VINNER("X wins"),
+    O_VINNER("O wins"),
+    FEILTILSTAND("Error")
 }
 
-class Spill(val board: Board) {
-    fun beregnSpillResultat(boardState: String): SpillResultat {
+class Spill(val brett: Brett) {
+    fun beregnSpillResultat(brettTilstand: String): SpillResultat {
         val vinnerKombinasjoner = listOf(
-            listOf(boardState[0], boardState[1], boardState[2]),
-            listOf(boardState[3], boardState[4], boardState[5]),
-            listOf(boardState[6], boardState[7], boardState[8]),
-            listOf(boardState[0], boardState[3], boardState[6]),
-            listOf(boardState[1], boardState[4], boardState[7]),
-            listOf(boardState[2], boardState[5], boardState[8]),
-            listOf(boardState[0], boardState[4], boardState[8]),
-            listOf(boardState[2], boardState[4], boardState[6]),
+            listOf(brettTilstand[0], brettTilstand[1], brettTilstand[2]),
+            listOf(brettTilstand[3], brettTilstand[4], brettTilstand[5]),
+            listOf(brettTilstand[6], brettTilstand[7], brettTilstand[8]),
+            listOf(brettTilstand[0], brettTilstand[3], brettTilstand[6]),
+            listOf(brettTilstand[1], brettTilstand[4], brettTilstand[7]),
+            listOf(brettTilstand[2], brettTilstand[5], brettTilstand[8]),
+            listOf(brettTilstand[0], brettTilstand[4], brettTilstand[8]),
+            listOf(brettTilstand[2], brettTilstand[4], brettTilstand[6]),
         )
 
-        var hasXThreeInARow = false
-        var hasOThreeInARow = false
+        var harXTrePåRad = false
+        var harOTrePåRad = false
 
-        // TODO: Kanskje flytte til Board.kt
-        val hasEmptySpaces = boardState.contains(SpillSymboler.EMPTY_SPACE.symbol)
-        val countX = boardState.count { it == SpillSymboler.X.symbol }
-        val countO = boardState.count { it == SpillSymboler.O.symbol }
-        val hasTooManyOfSymbol = abs(countX - countO) >= 2
+        // TODO: Kanskje flytte til Brett.kt
+        val harLedigePosisjoner = brettTilstand.contains(SpillSymboler.LEDIG_POSISJON.tegn)
+        val antallX = brettTilstand.count { it == SpillSymboler.X.tegn }
+        val antallO = brettTilstand.count { it == SpillSymboler.O.tegn }
+        val harForMangeAvSymbol = abs(antallX - antallO) >= 2
 
         for (verdierIVinnerposisjoner in vinnerKombinasjoner) {
             val vinnerPosisjonerString = verdierIVinnerposisjoner.joinToString("")
-            if (vinnerPosisjonerString == THREE_X) {
-                hasXThreeInARow = true
-            } else if (vinnerPosisjonerString == THREE_O) {
-                hasOThreeInARow = true
+            if (vinnerPosisjonerString == TRE_X) {
+                harXTrePåRad = true
+            } else if (vinnerPosisjonerString == TRE_O) {
+                harOTrePåRad = true
             }
         }
 
-        val result = when {
-            hasTooManyOfSymbol || (hasXThreeInARow && hasOThreeInARow) -> SpillResultat.IMPOSSIBLE
-            !hasXThreeInARow && !hasOThreeInARow && hasEmptySpaces -> SpillResultat.GAME_NOT_FINISHED
-            !hasXThreeInARow && !hasOThreeInARow -> SpillResultat.DRAW
-            hasXThreeInARow -> SpillResultat.X_WINS
-            hasOThreeInARow -> SpillResultat.O_WINS
-            else -> SpillResultat.ERROR_STATE
+        val resultat = when {
+            harForMangeAvSymbol || (harXTrePåRad && harOTrePåRad) -> SpillResultat.UMULIG
+            !harXTrePåRad && !harOTrePåRad && harLedigePosisjoner -> SpillResultat.SPILL_IKKE_FULLFØRT
+            !harXTrePåRad && !harOTrePåRad -> SpillResultat.UAVGJORT
+            harXTrePåRad -> SpillResultat.X_VINNER
+            harOTrePåRad -> SpillResultat.O_VINNER
+            else -> SpillResultat.FEILTILSTAND
         }
-        return result
+        return resultat
     }
 
     // TODO: Vi vil ikke sende inn boardState som string eller optional
-    fun validerTrekk(trekk: String, boardState: String?): ValidationResult {
-        val moveArray = trekk.split(" ")
-        val yKoordinat = moveArray[0].toIntOrNull()
-        val xKoordinat = moveArray[1].toIntOrNull()
+    fun validerTrekk(trekk: String, brettTilstand: String?): ValideringsResultat {
+        val trekkArray = trekk.split(" ")
+        val yKoordinat = trekkArray[0].toIntOrNull()
+        val xKoordinat = trekkArray[1].toIntOrNull()
         if (yKoordinat == null || xKoordinat == null) {
-            return ValidationResult(false, -1, -1,"You should enter numbers!")
+            return ValideringsResultat(false, -1, -1,"You should enter numbers!")
         }
         if (yKoordinat !in 1..3 || xKoordinat !in 1..3) {
-            return ValidationResult(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
+            return ValideringsResultat(false, yKoordinat, xKoordinat, "Coordinates should be from 1 to 3!")
         }
-        val isCellEmpty = board.isCellEmpty(yKoordinat, xKoordinat)
+        val erPosisjonLedig = brett.erPosisjonLedig(yKoordinat, xKoordinat)
 
-        return isCellEmpty
+        return erPosisjonLedig
     }
 }
 
-data class ValidationResult(
-    val isValid: Boolean,
+data class ValideringsResultat(
+    val erGyldig: Boolean,
     val yKoordinat: Int, // -1 betyr ugyldig
     val xKoordinat: Int, // -1 betyr ugyldig
-    val message: String? = null
+    val feilMelding: String? = null
 )

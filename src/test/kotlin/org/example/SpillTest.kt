@@ -7,74 +7,74 @@ class SpillTest {
 
     @Test
     fun `when boardState XXXOO__O_ expect X wins`() {
-        val boardState = "XXXOO__O_"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.X_WINS, actualResult)
+        val brettTilstand = "XXXOO__O_"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.X_VINNER, faktiskResultat)
     }
 
     @Test
     fun `when boardState XOXOXOXXO expect X wins`() {
-        val boardState = "XOXOXOXXO"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.X_WINS, actualResult)
+        val brettTilstand = "XOXOXOXXO"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.X_VINNER, faktiskResultat)
     }
 
     @Test
     fun `when boardState XOOOXOXXO expect O wins`() {
-        val boardState = "XOOOXOXXO"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.O_WINS, actualResult)
+        val brettTilstand = "XOOOXOXXO"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.O_VINNER, faktiskResultat)
     }
 
     @Test
     fun `when boardState XOXOOXXXO expect Draw`() {
-        val boardState = "XOXOOXXXO"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.DRAW, actualResult)
+        val brettTilstand = "XOXOOXXXO"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.UAVGJORT, faktiskResultat)
     }
 
     @Test
     fun `when boardState XO_OOX_X_ expect Game not finished`() {
-        val boardState = "XO_OOX_X_"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.GAME_NOT_FINISHED, actualResult)
+        val brettTilstand = "XO_OOX_X_"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.SPILL_IKKE_FULLFØRT, faktiskResultat)
     }
 
     @Test
     fun `when boardState XO_XO_XOX expect Impossible`() {
-        val boardState = "XO_XO_XOX"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
+        val brettTilstand = "XO_XO_XOX"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.UMULIG, faktiskResultat)
     }
 
     @Test
     fun `when boardState _O_X__X_X expect Impossible`() {
-        val boardState = "_O_X__X_X"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
+        val brettTilstand = "_O_X__X_X"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.UMULIG, faktiskResultat)
     }
 
     @Test
     fun `when boardState _OOOO_X_X expect Impossible`() {
-        val boardState = "_OOOO_X_X"
-        val board = Board(boardState)
-        val spill = Spill(board)
-        val actualResult = spill.beregnSpillResultat(boardState)
-        Assertions.assertEquals(SpillResultat.IMPOSSIBLE, actualResult)
+        val brettTilstand = "_OOOO_X_X"
+        val brett = Brett(brettTilstand)
+        val spill = Spill(brett)
+        val faktiskResultat = spill.beregnSpillResultat(brettTilstand)
+        Assertions.assertEquals(SpillResultat.UMULIG, faktiskResultat)
     }
 
     /*
