@@ -3,24 +3,20 @@ package org.example
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
+//13
+//Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 1, Size: 1
+//	at java.base/java.util.Collections$SingletonList.get(Collections.java:5179)
+//	at org.example.Spill.validerTrekk(Spill.kt:69)
+//	at org.example.AppKt.main(App.kt:18)
+//	at org.example.AppKt.main(App.kt)
 
 fun main() {
-    val brettTilstand = readln() // _XXOO_OX_
+    val brettTilstand = "_XXOO_OX_" // TODO: bytt tilbake til readln()
     val brett = Brett(brettTilstand)
     val spill = Spill(brett)
     brett.printBrett()
-    val spillResultat = spill.beregnSpillResultat(brettTilstand)
+    spill.spill()
 
-    if (spillResultat == SpillResultat.SPILL_IKKE_FULLFØRT) {
-        val trekk = readln() // 1 1
-        val validerTrekkResultat = spill.validerTrekk(trekk, brettTilstand)
-        if (!validerTrekkResultat.erGyldig) {
-            println(validerTrekkResultat.feilMelding)
-            // TODO: Loop som ber bruker skrive koordinat på nytt til det blir 'isValid = true'
-        } else {
-            // TODO: Oppdater grid med nytt trekk og print til konsoll
-        }
-    }
 
 // --- loop
 // Ta inn kordinater fra bruker

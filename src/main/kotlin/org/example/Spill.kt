@@ -77,6 +77,26 @@ class Spill(val brett: Brett) {
 
         return erPosisjonLedig
     }
+
+    fun spill() {
+        val brettTilstand = brett.brettTilstand
+        val spillResultat = beregnSpillResultat(brettTilstand)
+        if (spillResultat == SpillResultat.SPILL_IKKE_FULLFØRT) {
+            var erGyldig = false
+            do {
+                val trekk = readln() // 1 2
+                val validerTrekkResultat = validerTrekk(trekk, brettTilstand)
+                erGyldig = validerTrekkResultat.erGyldig
+                if (!validerTrekkResultat.erGyldig) {
+                    println(validerTrekkResultat.feilMelding)
+                } else {
+                    println("Ting funker")
+                    brett.oppdaterBrett(validerTrekkResultat.yKoordinat, validerTrekkResultat.xKoordinat)
+                    // TODO: Oppdater grid med nytt trekk og print til konsoll
+                }
+            } while (!erGyldig)
+        }
+    }
 }
 
 data class ValideringsResultat(

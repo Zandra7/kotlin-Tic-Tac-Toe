@@ -28,4 +28,9 @@ class Brett(val brettTilstand: String) {
         }
         return ValideringsResultat(true, yKoordinat, xKoordinat)
     }
+
+    fun oppdaterBrett(yKoordinat: Int, xKoordinat: Int) {
+        brettTilstand2dList[yKoordinat - 1][xKoordinat - 1] = 'X'
+        printBrett()
+    }
 }
