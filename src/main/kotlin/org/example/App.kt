@@ -11,7 +11,7 @@ package org.example
 //	at org.example.AppKt.main(App.kt)
 
 fun main() {
-    val brettTilstand = "_XXOO_OX_" // TODO: bytt tilbake til readln()
+    val brettTilstand = "_________"
     val brett = Brett(brettTilstand)
     val spill = Spill(brett)
     brett.printBrett()

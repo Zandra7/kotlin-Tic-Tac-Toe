@@ -21,22 +21,23 @@ enum class SpillResultat(val resultat: String) {
 }
 
 class Spill(val brett: Brett) {
-    fun beregnSpillResultat(brettTilstand: String): SpillResultat {
+    fun beregnSpillResultat(): SpillResultat {
+        val brettTilstand2dList = brett.brettTilstand2dList
         val vinnerKombinasjoner = listOf(
-            listOf(brettTilstand[0], brettTilstand[1], brettTilstand[2]),
-            listOf(brettTilstand[3], brettTilstand[4], brettTilstand[5]),
-            listOf(brettTilstand[6], brettTilstand[7], brettTilstand[8]),
-            listOf(brettTilstand[0], brettTilstand[3], brettTilstand[6]),
-            listOf(brettTilstand[1], brettTilstand[4], brettTilstand[7]),
-            listOf(brettTilstand[2], brettTilstand[5], brettTilstand[8]),
-            listOf(brettTilstand[0], brettTilstand[4], brettTilstand[8]),
-            listOf(brettTilstand[2], brettTilstand[4], brettTilstand[6]),
+            listOf(brettTilstand2dList[0][0], brettTilstand2dList[0][1], brettTilstand2dList[0][2]),
+            listOf(brettTilstand2dList[1][0], brettTilstand2dList[1][1], brettTilstand2dList[1][2]),
+            listOf(brettTilstand2dList[2][0], brettTilstand2dList[2][1], brettTilstand2dList[2][2]),
+            listOf(brettTilstand2dList[0][0], brettTilstand2dList[1][0], brettTilstand2dList[2][0]),
+            listOf(brettTilstand2dList[0][1], brettTilstand2dList[1][1], brettTilstand2dList[2][1]),
+            listOf(brettTilstand2dList[0][2], brettTilstand2dList[1][2], brettTilstand2dList[2][2]),
+            listOf(brettTilstand2dList[0][0], brettTilstand2dList[1][1], brettTilstand2dList[2][2]),
+            listOf(brettTilstand2dList[2][0], brettTilstand2dList[1][1], brettTilstand2dList[0][2]),
         )
 
         var harXTrePåRad = false
         var harOTrePåRad = false
 
-        // TODO: Kanskje flytte til Brett.kt
+        // TODO: Flytte til Brett.kt
         val harLedigePosisjoner = brettTilstand.contains(SpillSymboler.LEDIG_POSISJON.tegn)
         val antallX = brettTilstand.count { it == SpillSymboler.X.tegn }
         val antallO = brettTilstand.count { it == SpillSymboler.O.tegn }
@@ -79,9 +80,10 @@ class Spill(val brett: Brett) {
     }
 
     fun spill() {
-        val brettTilstand = brett.brettTilstand
-        val spillResultat = beregnSpillResultat(brettTilstand)
-        if (spillResultat == SpillResultat.SPILL_IKKE_FULLFØRT) {
+        var brettTilstand = brett.brettTilstand
+        var spillResultat = beregnSpillResultat(brettTilstand)
+        var xSinTur = true
+        do {
             var erGyldig = false
             do {
                 val trekk = readln() // 1 2
@@ -91,13 +93,27 @@ class Spill(val brett: Brett) {
                     println(validerTrekkResultat.feilMelding)
                 } else {
                     println("Ting funker")
-                    brett.oppdaterBrett(validerTrekkResultat.yKoordinat, validerTrekkResultat.xKoordinat)
-                    // TODO: Oppdater grid med nytt trekk og print til konsoll
+                    val spillerBrikke = if (xSinTur) {'X'} else { 'O' }
+                    brett.oppdaterBrett(validerTrekkResultat.yKoordinat, validerTrekkResultat.xKoordinat, spillerBrikke)
+                    xSinTur = !xSinTur
                 }
             } while (!erGyldig)
-        }
+            brettTilstand = brett.brettTilstand
+            spillResultat = beregnSpillResultat(brettTilstand)
+
+            println(spillResultat)
+            println(brettTilstand)
+
+        } while (spillResultat == SpillResultat.SPILL_IKKE_FULLFØRT)
+        println("noe tekst")
     }
 }
+
+// Creates a game loop
+//  where the program asks the user to enter the cell coordinates,
+//  analyzes the move for correctness and
+//  shows a grid with the changes if everything is okay.
+
 
 data class ValideringsResultat(
     val erGyldig: Boolean,

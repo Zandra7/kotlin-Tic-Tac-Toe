@@ -1,13 +1,11 @@
 package org.example
 
 class Brett(val brettTilstand: String) {
-    private val brettTilstand2dList = mutableListOf(
+     val brettTilstand2dList = mutableListOf(
         mutableListOf(brettTilstand[0], brettTilstand[1], brettTilstand[2]),   //[0]
         mutableListOf(brettTilstand[3], brettTilstand[4], brettTilstand[5]),   //[1]
         mutableListOf(brettTilstand[6], brettTilstand[7], brettTilstand[8])    //[2]
     )
-
-    // TODO: Implementer 'oppdater brett'
 
     fun printBrett() {
         println(
@@ -29,8 +27,8 @@ class Brett(val brettTilstand: String) {
         return ValideringsResultat(true, yKoordinat, xKoordinat)
     }
 
-    fun oppdaterBrett(yKoordinat: Int, xKoordinat: Int) {
-        brettTilstand2dList[yKoordinat - 1][xKoordinat - 1] = 'X'
+    fun oppdaterBrett(yKoordinat: Int, xKoordinat: Int, spiller: Char) {
+        brettTilstand2dList[yKoordinat - 1][xKoordinat - 1] = spiller
         printBrett()
     }
 }
